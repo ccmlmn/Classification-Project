@@ -1,0 +1,30 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# --- Virtual environment ---
+venv/
+.env/
+.venv/
+
+# --- Jupyter Notebook ---
+.ipynb_checkpoints/
+*.ipynb_save
+*.ipynb_snapshots
+
+# --- Logs & temp files ---
+*.log
+*.tmp
+*.swp
+.DS_Store
+
+# --- Data ---
+data/
+!data/*.md   # allow readme files inside data/
+
+# --- Outputs (optional, e.g. models, figures, etc.) ---
+outputs/
+!outputs/*.md   # keep documentation if needed
