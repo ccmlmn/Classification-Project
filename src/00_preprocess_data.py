@@ -1,9 +1,14 @@
 import pandas as pd
 import sys
 import numpy as np
+from config import load_config
+
+config = load_config()
+
+path = config["data_path"]
 
 # Import data 
-data = pd.read_csv("C:/Users/user/Desktop/MiniProject Data Scientist/Classification Project/Data//raw/WA_Fn-UseC_-HR-Employee-Attrition.csv")
+data = pd.read_csv(path)
 print(f"Shape of data before merge: {data.shape}")
 
 # Encode categorical data 
