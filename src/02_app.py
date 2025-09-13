@@ -1,19 +1,20 @@
 import streamlit as st
-import pipeline
 import joblib
 import numpy as np 
 import pandas as pd
-import shap 
+from load_config import load_config , config_data
+
+config = load_config()
+path = config["data_path"]
 
 st.title("Predict Attrtition based on Job Experience")
 st.write("Fill in the information below to predict attrition")
 
 @st.cache_resource
 def load_pipeline():
-    return joblib.load("C:\\Users\\user\\Desktop\\MiniProject Data Scientist\\Classification Project\\src\\pipeline_model.pkl")
+    return joblib.load(f"{path}src/pipeline_model.pkl")
 
 pipeline = load_pipeline()
-explainer = shap.Explainer(pipeline)
 
 # Collect input from user
 overtime = st.selectbox("Overtime" , ['Yes','No'])
@@ -40,7 +41,8 @@ if st.button("Predict attrition"):
     st.subheader("Prediction Result")
     st.write("Employee likely to leave" if prediction == 1 else "Employee likely to stay")
     st.write(f"Probabilty of attrition {prob:.2f%}")
-
+    
+"""
 # Explainability button 
 if st.button("Explain Prediction"):
     
@@ -48,6 +50,7 @@ if st.button("Explain Prediction"):
     st.set_option('deprecation.showPyplotGlobalUse', False)
     shap.plots.waterfall(shap_values[0])
     st.pyplot(bbox_inches='tight')
+"""
 
 
 
