@@ -37,7 +37,3 @@ uv.lock
 
 # --- Pre-commit hooks ---
 .pre-commit-cache/
-
-# --- Models ---
-*.pkl
-models/
