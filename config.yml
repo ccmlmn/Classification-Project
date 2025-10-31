@@ -4,4 +4,4 @@ model:
   framework: "LightGBM"
   version: "1.0"
 
-data_path: "C:/Users/user/Desktop/MiniProject Data Scientist/Classification Project/Data"
+data_path: "C:/Users/user/Desktop/MiniProject Data Scientist/Classification Project/"

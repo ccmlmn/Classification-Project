@@ -5,6 +5,9 @@ __pycache__/
 *.pyd
 *.so
 
+# --- Python version manager ---
+.python-version
+
 # --- Virtual environment ---
 venv/
 .env/
@@ -28,3 +31,13 @@ data/
 # --- Outputs (optional, e.g. models, figures, etc.) ---
 outputs/
 !outputs/*.md   # keep documentation if needed
+
+# --- UV lock file 
+uv.lock
+
+# --- Pre-commit hooks ---
+.pre-commit-cache/
+
+# --- Models ---
+*.pkl
+models/
