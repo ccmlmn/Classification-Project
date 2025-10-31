@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 # Load pipeline and template
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
+MODEL_DIR = os.path.join(os.path.dirname(__file__), "..", "models")
 pipeline = joblib.load(os.path.join(MODEL_DIR, "pipeline.pkl"))
 template = joblib.load(os.path.join(MODEL_DIR, "template_features.pkl"))
 

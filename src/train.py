@@ -1,3 +1,4 @@
+import logging
 import os
 
 import joblib
@@ -10,32 +11,29 @@ from sklearn.preprocessing import OneHotEncoder
 
 from load_config import config_data
 
+# logging setup
+logging.basicConfig(level=logging.INFO)
+log = logging.getLogger("Training")
+
 # Load config
 path = config_data["data_path"]
 csv_path = os.path.join(path, "data", "raw", "WA_Fn-UseC_-HR-Employee-Attrition.csv")
 
 # Import data
 data = pd.read_csv(csv_path)
-print(f"Shape of data before processing: {data.shape}")
+log.info(f"Shape of data before processing: {data.shape}")
 
-# Encode categorical data
-encode_columns = {"Yes": 1, "No": 0}
-columns_to_encode = ["Attrition", "OverTime"]
-
-for col in columns_to_encode:
-    if col in data.columns:
-        data[col] = data[col].map(encode_columns)
-
+# Drop irrelevant columns
 data.drop(columns=["EmployeeNumber", "EmployeeCount", "Over18"], inplace=True)
 data.reset_index(drop=True, inplace=True)
 
 # Features and target
 X = data.drop(columns=["Attrition"])
-y = data["Attrition"]
+y = data["Attrition"].map({"Yes": 1, "No": 0})
 
+# Handle categorical features
 cat_cols = X.select_dtypes(include=["object"]).columns.tolist()
 
-# Preprocessing
 preprocessor = ColumnTransformer(
     transformers=[("cat", OneHotEncoder(handle_unknown="ignore"), cat_cols)],
     remainder="passthrough",
@@ -49,10 +47,10 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, stratify=y, random_sta
 pipeline.fit(X_train, y_train)
 
 # Save model + template row
-MODEL_DIR = os.path.join(os.path.dirname(__file__), "models")
+MODEL_DIR = os.path.join(os.path.dirname(__file__), "..", "models")
 os.makedirs(MODEL_DIR, exist_ok=True)
 
 joblib.dump(pipeline, os.path.join(MODEL_DIR, "pipeline.pkl"))
 joblib.dump(X.iloc[0], os.path.join(MODEL_DIR, "template_features.pkl"))
 
-print("✅ Training complete. Model and template saved.")
+log.info("Training complete. Model and template saved.")
